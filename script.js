@@ -5,46 +5,39 @@ var descriptionText = document.querySelector(".description");
 $(document).ready(function () {
   console.log("ready!");
 });
+// Used Moment.JS
+const date = moment();
+today = moment().format("MMMM Do YYYY, h:mm:ss a");
+currentDay.textContent = today;
 
 // TO GET THE CURRENT DATE - find a way to display the day of the week
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, "0");
-var mm = String(today.getMonth() + 1).padStart(2, "0");
+var todays = new Date();
+var dd = String(todays.getDate()).padStart(2, "0");
+var mm = String(todays.getMonth() + 1).padStart(2, "0");
 //January is 0!
-var yyyy = today.getFullYear();
-today = mm + "/" + dd + "/" + yyyy;
-// document.write(today);
+var yyyy = todays.getFullYear();
+
 // TO GET CURRENT TIME - DONE
-currentDay.textContent = today;
+
 // gets the current of the user when are on the website
 function myHour() {
   var d = new Date();
   var n = d.getHours();
   return parseInt(n);
 }
-
-// for (let i = 0; i < saveButton.length; i++) {
-//   saveButton[i].addEventListener("click", function () {
-//     console.log("Button was clicked.");
-//     var divHour = event.target.parentNode.getAttribute("id");
-//     // push task and hour into an array
-//     var description = descriptionText.value.trim();
-//     console.log(description);
-//     console.log(divHour);
-//     storeTasks(divHour, description);
-//   });
-// }
-
+// Save button should save the content/values of both the TIME and the USER INPUT TEXT and store them together as a pair
 $(".saveBtn").on("click", function () {
   //get nearby values.
   console.log(this);
-  var text = $(this).siblings(".description").val();
+  //   Needed to use siblings because the text content appears inside the text-area
+  var thingToDo = $(this).siblings(".description").val();
   var time = $(this).parent().attr("id");
 
   //set items in local storage.
-  localStorage.setItem(time, text);
+  localStorage.setItem(time, thingToDo);
 });
 
+// retrieve all items and display them back in their correct divs on the page
 $("#hour-9 .description").val(localStorage.getItem("hour-9"));
 $("#hour-10 .description").val(localStorage.getItem("hour-10"));
 $("#hour-11 .description").val(localStorage.getItem("hour-11"));
@@ -94,6 +87,7 @@ var userInputByHour = [
 
 console.log(time);
 
+// Create an each function to run through all the id's and compare the time IDs to the current time
 $(".time-block").each(function () {
   console.log(this);
   var timeRow = $(this);
@@ -113,34 +107,3 @@ $(".time-block").each(function () {
     // if time.key> if time.key < myHour, then block is green
   }
 });
-// TODO: work on coloring the blocks with the for loop
-
-// function hourTracker() {
-//     //get current number of hours.
-//     var currentHour = moment().hour();
-
-//     // loop over time blocks
-//     $(".time-block").each(function () {
-//         var blockHour = parseInt($(this).attr("id").split("hour")[1]);
-//         console.log( blockHour, currentHour)
-
-//         //check if we've moved past this time
-//         if (blockHour < currentHour) {
-//             $(this).addClass("past");
-//             $(this).removeClass("future");
-//             $(this).removeClass("present");
-//         }
-//         else if (blockHour === currentHour) {
-//             $(this).removeClass("past");
-//             $(this).addClass("present");
-//             $(this).removeClass("future");
-//         }
-//         else {
-//             $(this).removeClass("present");
-//             $(this).removeClass("past");
-//             $(this).addClass("future");
-//         }
-//     })
-// };
-
-// hourTracker();
